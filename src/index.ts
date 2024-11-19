@@ -7,6 +7,10 @@ app.use(express.json());
 
 mongooseConnection();
 
+app.get('/', (request, response) => {
+    response.status(200).json({ message: 'OK!' });
+});
+
 app.get('/users/:username', async (request, response) => {
     const { username } = request.params;
 
