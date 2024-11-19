@@ -11,20 +11,20 @@ app.get('/', (request, response) => {
     response.status(200).json({ message: 'OK!' });
 });
 
-app.get('/users/:username', async (request, response) => {
-    const { username } = request.params;
+app.get('/users/:username', async (req, res) => {
+    const { username } = req.params;
 
     try {
         const user = await Users.findOne({ username: new RegExp(username, 'i') });
 
         if (!user) {
-            return response.status(404).json({ message: 'Usuário não encontrado.' });
+            return res.status(404).json({ message: 'Usuário não encontrado.' });
         }
 
-        response.json(user);
+        res.status(200).json(user);
     } catch (error) {
         console.error(error);
-        response.status(500).json({ message: 'Erro ao buscar o usuário.' });
+        res.status(500).json({ message: 'Erro ao buscar o usuário.' });
     }
 });
 
@@ -63,14 +63,12 @@ app.post('/users/:userId', async (req, res) => {
         user.logs.push(newLog);
 
         await user.save();
-        res.json({ message: 'Usuário atualizado com sucesso.', user });
+        res.status(201).json({ message: 'Usuário atualizado com sucesso.', user });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Erro ao atualizar ou criar o usuário.' });
     }
 });
-
-
 
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
