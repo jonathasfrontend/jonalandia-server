@@ -43,6 +43,10 @@ const UserSchema = new mongoose.Schema({
             type: Number,
             default: 0
         },
+        expulsion: {
+            type: Number,
+            default: 0
+        },
         floodTimeouts: {
             type: Number,
             default: 0
